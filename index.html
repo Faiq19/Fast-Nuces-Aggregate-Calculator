@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggregate Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">NU Aggregate Calculator</h2>
+                    <small class="text-light">Developed by Faiq Ahmad</small>
+                  </div>
+                
+            </div>
+            <div class="card-body">
+                <form id="aggregateForm">
+                    <!-- Admission Test Section -->
+                    <div class="mb-4">
+                        <h4>Admission Test</h4>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="englishTotal" class="form-label">English: Total</label>
+                                <input type="number" class="form-control" id="englishTotal" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="englishAttempted" class="form-label">Attempted</label>
+                                <input type="number" class="form-control" id="englishAttempted" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="englishCorrect" class="form-label">Correct</label>
+                                <input type="number" class="form-control" id="englishCorrect" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="analyticalTotal" class="form-label">Analytical Skills & IQ: Total</label>
+                                <input type="number" class="form-control" id="analyticalTotal" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="analyticalAttempted" class="form-label">Attempted</label>
+                                <input type="number" class="form-control" id="analyticalAttempted" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="analyticalCorrect" class="form-label">Correct</label>
+                                <input type="number" class="form-control" id="analyticalCorrect" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="basicMathTotal" class="form-label">Basic Math: Total</label>
+                                <input type="number" class="form-control" id="basicMathTotal" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="basicMathAttempted" class="form-label">Attempted</label>
+                                <input type="number" class="form-control" id="basicMathAttempted" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="basicMathCorrect" class="form-label">Correct</label>
+                                <input type="number" class="form-control" id="basicMathCorrect" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="advMathTotal" class="form-label">Adv. Math: Total</label>
+                                <input type="number" class="form-control" id="advMathTotal" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="advMathAttempted" class="form-label">Attempted</label>
+                                <input type="number" class="form-control" id="advMathAttempted" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="advMathCorrect" class="form-label">Correct</label>
+                                <input type="number" class="form-control" id="advMathCorrect" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Intermediate and Matriculation Section -->
+            </div>
+            <div class="mb-4">
+                <h4>Intermediate</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="intermediateTotal" class="form-label">Total Marks</label>
+                        <input type="number" class="form-control" id="intermediateTotal"
+                            placeholder="Part-1 total only if waiting for Part-2 Results" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="intermediateObtained" class="form-label">Obtained Marks</label>
+                        <input type="number" class="form-control" id="intermediateObtained" required>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h4>Matriculation</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="matricTotal" class="form-label">Total Marks</label>
+                        <input type="number" class="form-control" id="matricTotal" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="matricObtained" class="form-label">Obtained Marks</label>
+                        <input type="number" class="form-control" id="matricObtained" required>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Calculate Aggregate</button>
+            </div>
+            </form>
+            <div id="result" class="mt-4 text-center" style="display: none;">
+                <h3>Your Aggregate: <span id="aggregateResult"></span></h3>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultModalLabel">Aggregate Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Your Aggregate: <span id="modalAggregateResult"></span></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#aggregateForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    admissionTest: {
+                        English: {
+                            total: parseInt($('#englishTotal').val()),
+                            attempted: parseInt($('#englishAttempted').val()),
+                            correct: parseInt($('#englishCorrect').val())
+                        },
+                        "Analytical Skills & IQ": {
+                            total: parseInt($('#analyticalTotal').val()),
+                            attempted: parseInt($('#analyticalAttempted').val()),
+                            correct: parseInt($('#analyticalCorrect').val())
+                        },
+                        "Basic Math": {
+                            total: parseInt($('#basicMathTotal').val()),
+                            attempted: parseInt($('#basicMathAttempted').val()),
+                            correct: parseInt($('#basicMathCorrect').val())
+                        },
+                        "Adv. Math": {
+                            total: parseInt($('#advMathTotal').val()),
+                            attempted: parseInt($('#advMathAttempted').val()),
+                            correct: parseInt($('#advMathCorrect').val())
+                        }
+                    },
+                    intermediate: {
+                        total: parseFloat($('#intermediateTotal').val()),
+                        obtained: parseFloat($('#intermediateObtained').val())
+                    },
+                    matric: {
+                        total: parseFloat($('#matricTotal').val()),
+                        obtained: parseFloat($('#matricObtained').val())
+                    }
+                };
+
+                $.ajax({
+                    url: '/',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        $('#modalAggregateResult').text(response.aggregate);
+                        var resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+                        resultModal.show();
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while calculating the aggregate. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
