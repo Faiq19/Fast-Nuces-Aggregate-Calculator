@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Probability Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1500px;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Admission Probability Calculator</h2>
+            </div>
+            <div class="card-body">
+                <form id="probabilityForm">
+                    <div class="mb-3">
+                        <label for="meritInput" class="form-label">Enter your merit:</label>
+                        <input type="number" class="form-control" id="meritInput" step="0.01" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Calculate Probability</button>
+                    </div>
+                </form>
+                <div id="result" class="mt-4 text-center" style="display: none;">
+                    <h3>Admission Probabilities</h3>
+                    <img id="probabilityChart" src="" alt="Probability Chart" style="max-width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if there's a merit value in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const merit = urlParams.get('merit');
+            if (merit) {
+                $('#meritInput').val(merit);
+                calculateProbability(merit);
+            }
+
+            $('#probabilityForm').on('submit', function(e) {
+                e.preventDefault();
+                const merit = $('#meritInput').val();
+                calculateProbability(merit);
+            });
+
+            function calculateProbability(merit) {
+                $.ajax({
+                    url: '/calculate_probability',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({merit: parseFloat(merit)}),
+                    success: function(response) {
+                        $('#probabilityChart').attr('src', 'data:image/png;base64,' + response.chart);
+                        $('#result').show();
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

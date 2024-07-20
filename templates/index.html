@@ -42,11 +42,10 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
                     <h2 class="mb-0">NU Aggregate Calculator</h2>
                     <small class="text-light">Developed by Faiq Ahmad</small>
                 </div>
-
             </div>
             <div class="card-body">
                 <form id="aggregateForm">
@@ -56,116 +55,100 @@
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="englishTotal" class="form-label">English: Total</label>
-                                <input type="number" class="form-control" id="englishTotal" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="englishTotal" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="englishAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="englishAttempted" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="englishAttempted" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="englishCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="englishCorrect" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="englishCorrect" min="1" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="analyticalTotal" class="form-label">Analytical Skills & IQ: Total</label>
-                                <input type="number" class="form-control" id="analyticalTotal" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="analyticalTotal" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="analyticalAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="analyticalAttempted" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="analyticalAttempted" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="analyticalCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="analyticalCorrect" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="analyticalCorrect" min="1" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="basicMathTotal" class="form-label">Basic Math: Total</label>
-                                <input type="number" class="form-control" id="basicMathTotal" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="basicMathTotal" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="basicMathAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="basicMathAttempted" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="basicMathAttempted" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="basicMathCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="basicMathCorrect" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="basicMathCorrect" min="1" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="advMathTotal" class="form-label">Adv. Math: Total</label>
-                                <input type="number" class="form-control" id="advMathTotal" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="advMathTotal" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="advMathAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="advMathAttempted" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="advMathAttempted" min="1" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="advMathCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="advMathCorrect" min="1" required
-                                    oninput="validateInput(this)">
+                                <input type="number" class="form-control" id="advMathCorrect" min="1" required>
                             </div>
                         </div>
                     </div>
                     <!-- Intermediate and Matriculation Section -->
-            </div>
-            <div class="mb-4">
-                <h4>Intermediate</h4>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="intermediateTotal" class="form-label">Total Marks</label>
-                        <input type="number" class="form-control" id="intermediateTotal"
-                            placeholder="Part-1 total only if waiting for Part-2 Results" min="1" required
-                            oninput="validateInput(this)">
+                    <div class="mb-4">
+                        <h4>Intermediate</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="intermediateTotal" class="form-label">Total Marks</label>
+                                <input type="number" class="form-control" id="intermediateTotal"
+                                    placeholder="Part-1 total only if waiting for Part-2 Results" min="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="intermediateObtained" class="form-label">Obtained Marks</label>
+                                <input type="number" class="form-control" id="intermediateObtained" min="1" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="intermediateObtained" class="form-label">Obtained Marks</label>
-                        <input type="number" class="form-control" id="intermediateObtained" min="1" required
-                            oninput="validateInput(this)">
+                    <div class="mb-4">
+                        <h4>Matriculation</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="matricTotal" class="form-label">Total Marks</label>
+                                <input type="number" class="form-control" id="matricTotal" min="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="matricObtained" class="form-label">Obtained Marks</label>
+                                <input type="number" class="form-control" id="matricObtained" min="1" required>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="mb-4">
-                <h4>Matriculation</h4>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="matricTotal" class="form-label">Total Marks</label>
-                        <input type="number" class="form-control" id="matricTotal" min="1" required
-                            oninput="validateInput(this)">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Calculate Aggregate</button>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="matricObtained" class="form-label">Obtained Marks</label>
-                        <input type="number" class="form-control" id="matricObtained" min="1" required
-                            oninput="validateInput(this)">
-                    </div>
-                </div>
+                </form>
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Calculate Aggregate</button>
-            </div>
-            </form>
-            <div id="result" class="mt-4 text-center" style="display: none;">
-                <h3>Your Aggregate: <span id="aggregateResult"></span></h3>
+            <div class="card-footer text-center">
+                <a href="/probability" class="btn btn-secondary">Go to Probability Calculator</a>
             </div>
         </div>
     </div>
-    </div>
 
+    <!-- Result Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -178,6 +161,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="/probability" id="modalProbabilityBtn" class="btn btn-primary">Go to Probability Calculator</a>
                 </div>
             </div>
         </div>
@@ -199,6 +183,7 @@
             $('#englishTotal, #englishAttempted, #englishCorrect, #analyticalTotal, #analyticalAttempted, #analyticalCorrect, #basicMathTotal, #basicMathAttempted, #basicMathCorrect, #advMathTotal, #advMathAttempted, #advMathCorrect, #intermediateTotal, #intermediateObtained, #matricTotal, #matricObtained').on('input', function () {
                 validateInput(this);
             });
+
             $('#aggregateForm').on('submit', function (e) {
                 e.preventDefault();
 
@@ -242,6 +227,9 @@
                     data: JSON.stringify(formData),
                     success: function (response) {
                         $('#modalAggregateResult').text(response.aggregate);
+                        var probabilityUrl = '/probability?merit=' + parseFloat(response.aggregate);
+                        $('#modalProbabilityBtn').attr('href', probabilityUrl);
+                        
                         var resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
                         resultModal.show();
                     },
@@ -250,6 +238,15 @@
                         alert('An error occurred while calculating the aggregate. Please try again.');
                     }
                 });
+            });
+
+            $('#modalProbabilityBtn').on('click', function(e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $('#resultModal').modal('hide');
+                setTimeout(function() {
+                    window.location.href = href;
+                }, 500);
             });
         });
     </script>
