@@ -4,164 +4,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aggregate Calculator</title>
+    <title>NU Aggregate Calculator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 10px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .main-card {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
+            margin-bottom: 20px;
         }
 
         .card-header {
-            background-color: #007bff;
+            background: linear-gradient(135deg, var(--primary-color), #0056b3);
             color: white;
-            border-radius: 15px 15px 0 0 !important;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .section-header {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background: linear-gradient(135deg, var(--primary-color), #0056b3);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-color), #5a6268);
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .section-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--success-color), #1e7e34);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3em;
+        }
+
+        /* Hide number input arrows */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .card-header h1 {
+                font-size: 2rem;
+            }
+            
+            .card-header .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .section-header {
+                font-size: 1.3rem;
+            }
+            
+            .form-control {
+                padding: 0.6rem 0.8rem;
+            }
+            
+            .btn-primary {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .section-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .section-header {
+                font-size: 1.2rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .form-control {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.9rem;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                padding: 0.75rem;
+            }
+        }
+
+        /* Enhanced form styling */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -0.5rem;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.5rem;
+        }
+
+        .form-col-full {
+            flex: 1 1 100%;
+            padding: 0.5rem;
+        }
+
+        .form-col-half {
+            flex: 1 1 50%;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-col {
+                min-width: 100%;
+            }
+            
+            .form-col-half {
+                flex: 1 1 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="card">
+    <div class="container mt-3">
+        <div class="main-card">
             <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">NU Aggregate Calculator</h2>
-                    <small class="text-light">Developed by Faiq Ahmad</small>
-                </div>
+                <h1><i class="fas fa-calculator"></i> NU Aggregate Calculator</h1>
+                <div class="subtitle">Calculate your FAST-NUCES admission aggregate with precision</div>
+                <small class="text-light">Developed by Faiq Ahmad</small>
             </div>
             <div class="card-body">
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Calculating your aggregate...</p>
+                </div>
+                
                 <form id="aggregateForm">
                     <!-- Admission Test Section -->
-                    <div class="mb-4">
-                        <h4>Admission Test</h4>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="englishTotal" class="form-label">English: Total</label>
-                                <input type="number" class="form-control" id="englishTotal" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="englishAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="englishAttempted" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="englishCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="englishCorrect" min="1" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="analyticalTotal" class="form-label">Analytical Skills & IQ: Total</label>
-                                <input type="number" class="form-control" id="analyticalTotal" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="analyticalAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="analyticalAttempted" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="analyticalCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="analyticalCorrect" min="1" required>
+                    <div class="section-card">
+                        <h4 class="section-header">
+                            <i class="fas fa-clipboard-check"></i>
+                            Admission Test Details
+                        </h4>
+                        
+                        <!-- English Section -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3"><i class="fas fa-language"></i> English</h5>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label for="englishTotal" class="form-label">Total Questions</label>
+                                    <input type="number" class="form-control" id="englishTotal" min="1" placeholder="e.g., 20" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="englishAttempted" class="form-label">Attempted</label>
+                                    <input type="number" class="form-control" id="englishAttempted" min="1" placeholder="e.g., 18" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="englishCorrect" class="form-label">Correct</label>
+                                    <input type="number" class="form-control" id="englishCorrect" min="0" placeholder="e.g., 15" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="basicMathTotal" class="form-label">Basic Math: Total</label>
-                                <input type="number" class="form-control" id="basicMathTotal" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="basicMathAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="basicMathAttempted" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="basicMathCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="basicMathCorrect" min="1" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="advMathTotal" class="form-label">Adv. Math: Total</label>
-                                <input type="number" class="form-control" id="advMathTotal" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="advMathAttempted" class="form-label">Attempted</label>
-                                <input type="number" class="form-control" id="advMathAttempted" min="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="advMathCorrect" class="form-label">Correct</label>
-                                <input type="number" class="form-control" id="advMathCorrect" min="1" required>
+                        
+                        <!-- Analytical Skills Section -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3"><i class="fas fa-brain"></i> Analytical Skills & IQ</h5>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label for="analyticalTotal" class="form-label">Total Questions</label>
+                                    <input type="number" class="form-control" id="analyticalTotal" min="1" placeholder="e.g., 30" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="analyticalAttempted" class="form-label">Attempted</label>
+                                    <input type="number" class="form-control" id="analyticalAttempted" min="1" placeholder="e.g., 25" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="analyticalCorrect" class="form-label">Correct</label>
+                                    <input type="number" class="form-control" id="analyticalCorrect" min="0" placeholder="e.g., 20" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Intermediate and Matriculation Section -->
-                    <div class="mb-4">
-                        <h4>Intermediate</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="intermediateTotal" class="form-label">Total Marks</label>
-                                <input type="number" class="form-control" id="intermediateTotal"
-                                    placeholder="Part-1 total only if waiting for Part-2 Results" min="1" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="intermediateObtained" class="form-label">Obtained Marks</label>
-                                <input type="number" class="form-control" id="intermediateObtained" min="1" required>
+                        
+                        <!-- Basic Math Section -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3"><i class="fas fa-square-root-alt"></i> Basic Math</h5>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label for="basicMathTotal" class="form-label">Total Questions</label>
+                                    <input type="number" class="form-control" id="basicMathTotal" min="1" placeholder="e.g., 20" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="basicMathAttempted" class="form-label">Attempted</label>
+                                    <input type="number" class="form-control" id="basicMathAttempted" min="1" placeholder="e.g., 18" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="basicMathCorrect" class="form-label">Correct</label>
+                                    <input type="number" class="form-control" id="basicMathCorrect" min="0" placeholder="e.g., 15" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <h4>Matriculation</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="matricTotal" class="form-label">Total Marks</label>
-                                <input type="number" class="form-control" id="matricTotal" min="1" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="matricObtained" class="form-label">Obtained Marks</label>
-                                <input type="number" class="form-control" id="matricObtained" min="1" required>
+                        
+                        <!-- Advanced Math Section -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3"><i class="fas fa-function"></i> Advanced Math</h5>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label for="advMathTotal" class="form-label">Total Questions</label>
+                                    <input type="number" class="form-control" id="advMathTotal" min="1" placeholder="e.g., 30" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="advMathAttempted" class="form-label">Attempted</label>
+                                    <input type="number" class="form-control" id="advMathAttempted" min="1" placeholder="e.g., 25" required>
+                                </div>
+                                <div class="form-col">
+                                    <label for="advMathCorrect" class="form-label">Correct</label>
+                                    <input type="number" class="form-control" id="advMathCorrect" min="0" placeholder="e.g., 20" required>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Academic Records Section -->
+                    <div class="section-card">
+                        <h4 class="section-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            Academic Records
+                        </h4>
+                        
+                        <!-- Intermediate Section -->
+                        <div class="mb-4">
+                            <h5 class="text-success mb-3"><i class="fas fa-school"></i> Intermediate</h5>
+                            <div class="form-row">
+                                <div class="form-col-half">
+                                    <label for="intermediateTotal" class="form-label">Total Marks</label>
+                                    <input type="number" class="form-control" id="intermediateTotal" min="1" placeholder="e.g., 1100" required>
+                                    <small class="text-muted">Enter Part-1 total only if waiting for Part-2 Results</small>
+                                </div>
+                                <div class="form-col-half">
+                                    <label for="intermediateObtained" class="form-label">Obtained Marks</label>
+                                    <input type="number" class="form-control" id="intermediateObtained" min="1" placeholder="e.g., 950" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Matriculation Section -->
+                        <div class="mb-4">
+                            <h5 class="text-info mb-3"><i class="fas fa-certificate"></i> Matriculation</h5>
+                            <div class="form-row">
+                                <div class="form-col-half">
+                                    <label for="matricTotal" class="form-label">Total Marks</label>
+                                    <input type="number" class="form-control" id="matricTotal" min="1" placeholder="e.g., 1050" required>
+                                </div>
+                                <div class="form-col-half">
+                                    <label for="matricObtained" class="form-label">Obtained Marks</label>
+                                    <input type="number" class="form-control" id="matricObtained" min="1" placeholder="e.g., 900" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Calculate Aggregate</button>
+                        <button type="submit" class="btn btn-primary pulse">
+                            <i class="fas fa-calculator"></i> Calculate My Aggregate
+                        </button>
                     </div>
                 </form>
+                
+                <!-- Help Section -->
+                <div class="mt-4">
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle"></i> How it works:</h6>
+                        <ul class="mb-0">
+                            <li><strong>Admission Test:</strong> 50% weightage</li>
+                            <li><strong>Intermediate:</strong> 40% weightage</li>
+                            <li><strong>Matriculation:</strong> 10% weightage</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer text-center">
-                <a href="/probability" class="btn btn-secondary">Go to Probability Calculator</a>
-            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-3">
+            <small class="text-muted">
+            <i class="fas fa-heart text-danger"></i> 
+            <span style="color: #000;">Made with love by Faiq Ahmad | 
+            <i class="fas fa-graduation-cap" style="color: #000;"></i> For FAST-NUCES Students</span>
+            </small>
         </div>
     </div>
 
     <!-- Result Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="resultModalLabel">Aggregate Result</h5>
+                    <h5 class="modal-title" id="resultModalLabel">
+                        <i class="fas fa-trophy"></i> Your Aggregate Result
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h3>Your Aggregate: <span id="modalAggregateResult"></span></h3>
+                <div class="modal-body text-center">
+                    <div class="result-container">
+                        <h2 class="display-4 text-success mb-4">
+                            <i class="fas fa-percentage"></i>
+                            <span id="modalAggregateResult" class="pulse"></span>
+                        </h2>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> This is your calculated aggregate percentage for FAST-NUCES admission.
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card border-primary">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-primary">Test Score</h6>
+                                        <p class="card-text">50% weightage</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-success">Intermediate</h6>
+                                        <p class="card-text">40% weightage</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-info">Matriculation</h6>
+                                        <p class="card-text">10% weightage</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="/probability" id="modalProbabilityBtn" class="btn btn-primary">Go to Probability Calculator</a>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Calculate Again
+                    </button>
                 </div>
             </div>
         </div>
@@ -171,52 +537,132 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Input validation functions
             function validateInput(input) {
-                if (input.value <= 0) {
-                    input.setCustomValidity("Value must be greater than zero");
+                const value = parseFloat(input.value);
+                const fieldName = input.id.toLowerCase();
+                
+                // Allow 0 for correct answers, but other fields must be positive
+                if (fieldName.includes('correct')) {
+                    if (value < 0 || isNaN(value)) {
+                        input.setCustomValidity("Value must be 0 or greater");
+                        input.classList.add('is-invalid');
+                        input.classList.remove('is-valid');
+                    } else {
+                        input.setCustomValidity("");
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    }
                 } else {
-                    input.setCustomValidity("");
+                    if (value <= 0 || isNaN(value)) {
+                        input.setCustomValidity("Value must be a positive number");
+                        input.classList.add('is-invalid');
+                        input.classList.remove('is-valid');
+                    } else {
+                        input.setCustomValidity("");
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    }
                 }
             }
 
-            // Apply the validation function to relevant input fields
-            $('#englishTotal, #englishAttempted, #englishCorrect, #analyticalTotal, #analyticalAttempted, #analyticalCorrect, #basicMathTotal, #basicMathAttempted, #basicMathCorrect, #advMathTotal, #advMathAttempted, #advMathCorrect, #intermediateTotal, #intermediateObtained, #matricTotal, #matricObtained').on('input', function () {
+            function validateLogicalConstraints() {
+                let isValid = true;
+                const sections = ['english', 'analytical', 'basicMath', 'advMath'];
+                
+                sections.forEach(section => {
+                    const total = parseInt($(`#${section}Total`).val()) || 0;
+                    const attempted = parseInt($(`#${section}Attempted`).val()) || 0;
+                    const correct = parseInt($(`#${section}Correct`).val()) || 0;
+                    
+                    // Check if attempted > total
+                    if (attempted > total) {
+                        $(`#${section}Attempted`).addClass('is-invalid');
+                        isValid = false;
+                    } else {
+                        $(`#${section}Attempted`).removeClass('is-invalid');
+                    }
+                    
+                    // Check if correct > attempted
+                    if (correct > attempted) {
+                        $(`#${section}Correct`).addClass('is-invalid');
+                        isValid = false;
+                    } else {
+                        $(`#${section}Correct`).removeClass('is-invalid');
+                    }
+                });
+                
+                // Check academic records
+                const intTotal = parseFloat($('#intermediateTotal').val()) || 0;
+                const intObtained = parseFloat($('#intermediateObtained').val()) || 0;
+                if (intObtained > intTotal) {
+                    $('#intermediateObtained').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#intermediateObtained').removeClass('is-invalid');
+                }
+                
+                const matTotal = parseFloat($('#matricTotal').val()) || 0;
+                const matObtained = parseFloat($('#matricObtained').val()) || 0;
+                if (matObtained > matTotal) {
+                    $('#matricObtained').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#matricObtained').removeClass('is-invalid');
+                }
+                
+                return isValid;
+            }
+
+            // Apply validation to all input fields
+            $('input[type="number"]').on('input', function () {
                 validateInput(this);
+                validateLogicalConstraints();
             });
 
+            // Enhanced form submission
             $('#aggregateForm').on('submit', function (e) {
                 e.preventDefault();
+                
+                if (!validateLogicalConstraints()) {
+                    showAlert('Please check your input values. Make sure attempted questions don\'t exceed total questions and correct answers don\'t exceed attempted questions.', 'error');
+                    return;
+                }
+
+                // Show loading spinner
+                $('#loadingSpinner').show();
+                $('#aggregateForm').hide();
 
                 const formData = {
                     admissionTest: {
                         English: {
-                            total: parseInt($('#englishTotal').val()),
-                            attempted: parseInt($('#englishAttempted').val()),
-                            correct: parseInt($('#englishCorrect').val())
+                            total: parseInt($('#englishTotal').val()) || 0,
+                            attempted: parseInt($('#englishAttempted').val()) || 0,
+                            correct: parseInt($('#englishCorrect').val()) || 0
                         },
                         "Analytical Skills & IQ": {
-                            total: parseInt($('#analyticalTotal').val()),
-                            attempted: parseInt($('#analyticalAttempted').val()),
-                            correct: parseInt($('#analyticalCorrect').val())
+                            total: parseInt($('#analyticalTotal').val()) || 0,
+                            attempted: parseInt($('#analyticalAttempted').val()) || 0,
+                            correct: parseInt($('#analyticalCorrect').val()) || 0
                         },
                         "Basic Math": {
-                            total: parseInt($('#basicMathTotal').val()),
-                            attempted: parseInt($('#basicMathAttempted').val()),
-                            correct: parseInt($('#basicMathCorrect').val())
+                            total: parseInt($('#basicMathTotal').val()) || 0,
+                            attempted: parseInt($('#basicMathAttempted').val()) || 0,
+                            correct: parseInt($('#basicMathCorrect').val()) || 0
                         },
                         "Adv. Math": {
-                            total: parseInt($('#advMathTotal').val()),
-                            attempted: parseInt($('#advMathAttempted').val()),
-                            correct: parseInt($('#advMathCorrect').val())
+                            total: parseInt($('#advMathTotal').val()) || 0,
+                            attempted: parseInt($('#advMathAttempted').val()) || 0,
+                            correct: parseInt($('#advMathCorrect').val()) || 0
                         }
                     },
                     intermediate: {
-                        total: parseFloat($('#intermediateTotal').val()),
-                        obtained: parseFloat($('#intermediateObtained').val())
+                        total: parseFloat($('#intermediateTotal').val()) || 0,
+                        obtained: parseFloat($('#intermediateObtained').val()) || 0
                     },
                     matric: {
-                        total: parseFloat($('#matricTotal').val()),
-                        obtained: parseFloat($('#matricObtained').val())
+                        total: parseFloat($('#matricTotal').val()) || 0,
+                        obtained: parseFloat($('#matricObtained').val()) || 0
                     }
                 };
 
@@ -226,28 +672,89 @@
                     contentType: 'application/json',
                     data: JSON.stringify(formData),
                     success: function (response) {
+                        // Hide loading spinner
+                        $('#loadingSpinner').hide();
+                        $('#aggregateForm').show();
+                        
+                        // Show result
                         $('#modalAggregateResult').text(response.aggregate);
-                        var probabilityUrl = '/probability?merit=' + parseFloat(response.aggregate);
-                        $('#modalProbabilityBtn').attr('href', probabilityUrl);
                         
                         var resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
                         resultModal.show();
+                        
+                        showAlert('Your aggregate has been calculated successfully!', 'success');
                     },
-                    error: function (error) {
+                    error: function (xhr, status, error) {
+                        // Hide loading spinner
+                        $('#loadingSpinner').hide();
+                        $('#aggregateForm').show();
+                        
                         console.error('Error:', error);
-                        alert('An error occurred while calculating the aggregate. Please try again.');
+                        showAlert('An error occurred while calculating the aggregate. Please try again.', 'error');
                     }
                 });
             });
 
-            $('#modalProbabilityBtn').on('click', function(e) {
-                e.preventDefault();
-                var href = $(this).attr('href');
-                $('#resultModal').modal('hide');
-                setTimeout(function() {
-                    window.location.href = href;
-                }, 500);
+            // Alert function
+            function showAlert(message, type) {
+                const alertClass = type === 'error' ? 'alert-danger' : 'alert-success';
+                const alertIcon = type === 'error' ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
+                
+                const alertHtml = `
+                    <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                        <i class="${alertIcon}"></i> ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                
+                $('.container').prepend(alertHtml);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    $('.alert').alert('close');
+                }, 5000);
+            }
+
+            // Auto-save form data
+            $('input').on('change', function() {
+                const formData = {};
+                $('input').each(function() {
+                    formData[this.id] = this.value;
+                });
+                localStorage.setItem('aggregateFormData', JSON.stringify(formData));
             });
+
+            // Load saved form data
+            const savedData = localStorage.getItem('aggregateFormData');
+            if (savedData) {
+                try {
+                    const formData = JSON.parse(savedData);
+                    Object.keys(formData).forEach(key => {
+                        if (formData[key] && $(`#${key}`).length) {
+                            $(`#${key}`).val(formData[key]);
+                        }
+                    });
+                } catch (e) {
+                    console.log('Error loading saved data:', e);
+                    localStorage.removeItem('aggregateFormData');
+                }
+            }
+        });
+
+        // Reset form function
+        function resetForm() {
+            document.getElementById('aggregateForm').reset();
+            $('input').removeClass('is-valid is-invalid');
+            localStorage.removeItem('aggregateFormData');
+            $('#resultModal').modal('hide');
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                $('#aggregateForm').submit();
+            }
         });
     </script>
 </body>

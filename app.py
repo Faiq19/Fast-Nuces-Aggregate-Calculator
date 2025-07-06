@@ -6,7 +6,14 @@ import base64
 
 app = Flask(__name__)
 
-df_2024 = pd.read_csv('data/predictions_2024.csv')
+# Disable probability calculation - set to False to enable
+PROBABILITY_ENABLED = False
+
+try:
+    df_2024 = pd.read_csv('data/predictions_2024.csv') if PROBABILITY_ENABLED else None
+except FileNotFoundError:
+    df_2024 = None
+    PROBABILITY_ENABLED = False
 
 def calculate_probabilities(student_merit, predicted_merits):
     probabilities = {}
@@ -122,10 +129,15 @@ def index():
 
 @app.route('/probability')
 def probability():
+    if not PROBABILITY_ENABLED:
+        return render_template('index.html')  # Redirect to main page
     return render_template('probability.html')
 
 @app.route('/calculate_probability', methods=['POST'])
 def calculate_probability():
+    if not PROBABILITY_ENABLED:
+        return jsonify({'error': 'Probability calculation is currently disabled'}), 503
+    
     data = request.json
     student_merit = data['merit']
     probabilities = calculate_probabilities(student_merit, df_2024)
